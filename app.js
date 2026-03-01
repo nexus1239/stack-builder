@@ -169,12 +169,29 @@ function showTooltip(e, compound) {
 
 function moveTooltip(e) {
   const margin = 12;
-  let x = e.clientX + margin;
-  let y = e.clientY + margin;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
   const tw = tooltip.offsetWidth;
   const th = tooltip.offsetHeight;
-  if (x + tw > window.innerWidth - margin) x = e.clientX - tw - margin;
-  if (y + th > window.innerHeight - margin) y = e.clientY - th - margin;
+
+  // Try positioning to the right and below the cursor
+  let x = e.clientX + margin;
+  let y = e.clientY + margin;
+
+  // Flip left if overflowing right edge
+  if (x + tw > vw - margin) {
+    x = e.clientX - tw - margin;
+  }
+
+  // Flip above if overflowing bottom edge
+  if (y + th > vh - margin) {
+    y = e.clientY - th - margin;
+  }
+
+  // Clamp so tooltip never goes off-screen on small viewports
+  x = Math.max(margin, Math.min(x, vw - tw - margin));
+  y = Math.max(margin, Math.min(y, vh - th - margin));
+
   tooltip.style.left = x + 'px';
   tooltip.style.top = y + 'px';
 }
