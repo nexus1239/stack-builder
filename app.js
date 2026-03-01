@@ -290,8 +290,8 @@ function renderInteractions() {
     item.innerHTML = `
       <span class="interaction-icon">${icon}</span>
       <div class="interaction-text">
-        <div class="interaction-compounds">${compoundNames}</div>
-        <div class="interaction-note">${interaction.note}</div>
+        <div class="interaction-compounds">${compoundNames} — ${interaction.title}</div>
+        <div class="interaction-note">${interaction.description}</div>
       </div>
     `;
     list.appendChild(item);
